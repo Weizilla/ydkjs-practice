@@ -1,8 +1,6 @@
 // Chapter 2: Into JavaScript
 // https://github.com/getify/You-Dont-Know-JS/blob/master/up%20&%20going/ch2.md
 
-"use strict";
-
 // types
 var a;
 console.log(typeof a);
@@ -128,3 +126,54 @@ var plusOne = makeAdder(1);
 var plusTen = makeAdder(10);
 console.log("plusOne(4)", plusOne(4));
 console.log("plusTen(4)", plusTen(4));
+
+// modules
+function User() {
+    var username;
+    var password;
+
+    function doLogin(user, pass) {
+        username = user;
+        password = pass;
+
+        console.log("logging in with", username, "and", password);
+    }
+
+    return {
+        login: doLogin
+    };
+}
+
+var fred = User();
+fred.login("fred", "hunter2");
+
+// this
+function foo() {
+    console.log(this.bar);
+}
+
+var bar = "global";
+
+var obj1 = {
+    bar: "obj1",
+    foo: foo
+};
+
+var obj2 = {
+    bar: "obj2"
+};
+
+console.log("foo():"); foo(); // undefined as "this" refers to global obj. Will thrown an error if using strict mode
+console.log("obj1.foo():"); obj1.foo();
+console.log("foo.call(obj2):"); foo.call(obj2);
+console.log("new foo():"); new foo(); // returns empty object
+
+//prototypes
+var foo = {
+    a: 42
+};
+var bar = Object.create(foo); // bar's prototype is linked to foo obj
+bar.b = "hello world";
+console.log("bar.b:", bar.b);
+console.log("bar.a:", bar.a);
+
